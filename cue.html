@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MC Cue Cards - Reuni SMAN 81 Angkatan 2000</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            overflow: hidden;
+            height: 100vh;
+        }
+        
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .slide {
+            display: none;
+            width: 95%;
+            max-width: 1200px;
+            height: 90vh;
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 25px 30px;
+            border-radius: 20px 20px 0 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .slide-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .slide-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        
+        .slide-content {
+            padding: 30px;
+        }
+        
+        .objective {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1e3c72;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: 600;
+        }
+        
+        .mc-dialogue {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3b82f6;
+        }
+        
+        .mc1-speech, .mc2-speech {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            line-height: 1.6;
+        }
+        
+        .mc1-speech {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left: 4px solid #2196f3;
+        }
+        
+        .mc2-speech {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #9c27b0;
+        }
+        
+        .mc-label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            color: #1565c0;
+        }
+        
+        .mc2-speech .mc-label {
+            color: #7b1fa2;
+        }
+        
+        .action-section {
+            background: #fff3e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .action-title {
+            font-weight: 700;
+            color: #f57c00;
+            margin-bottom: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .action-list li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .action-list li::before {
+            content: "▶";
+            position: absolute;
+            left: 0;
+            color: #ff9800;
+        }
+        
+        .technical-note {
+            background: #ffebee;
+            border: 2px solid #f44336;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .technical-title {
+            font-weight: 700;
+            color: #d32f2f;
+            margin-bottom: 8px;
+        }
+        
+        .special-note {
+            background: #e8f5e8;
+            border: 2px solid #4caf50;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .special-title {
+            font-weight: 700;
+            color: #388e3c;
+            margin-bottom: 8px;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+        
+        .nav-btn {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1e3c72;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+        
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            z-index: 1000;
+        }
+        
+        .intro-slide {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+        }
+        
+        .intro-slide h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .intro-slide h2 {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .intro-slide .highlight {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #1e3c72;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                width: 98%;
+                height: 95vh;
+            }
+            
+            .slide-content {
+                padding: 20px;
+            }
+            
+            .slide-title {
+                font-size: 1.4rem;
+            }
+            
+            .navigation {
+                bottom: 20px;
+                gap: 10px;
+            }
+            
+            .nav-btn {
+                padding: 10px 18px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow-container">
+        <!-- Intro Slide -->
+        <div class="slide active intro-slide">
+            <h1>🎤 MC Cue Cards</h1>
+            <h2>Reuni SMAN 81 Angkatan 2000</h2>
+            <div class="highlight">
+                Dual MC Guide: 09:31 - 14:40<br>
+                21 Segments • 4 Hours 9 Minutes
+            </div>
+        </div>
+
+        <!-- Slide 1 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #1</div>
+                <div class="slide-subtitle">📍 09:31 - 09:33 | MC Memanggil Seluruh Partisipan</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Gather all participants to the main event area
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Selamat pagi keluarga besar SMAN 81 Angkatan 2000!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Kami mohon seluruh alumni, Bapak Ibu Guru, dan karyawan untuk berkumpul di area acara utama."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita mulai perjalanan nostalgia kita hari ini!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Silakan mengambil tempat duduk masing-masing. Ayo kita berkumpul!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Speak with enthusiastic, welcoming tone</li>
+                        <li><strong>MC2:</strong> Use hand gestures to direct people to seating area</li>
+                        <li><strong>Both:</strong> Ensure microphones are working properly</li>
+                        <li><strong>Both:</strong> Wait for people to settle before proceeding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #2</div>
+                <div class="slide-subtitle">📍 09:33 - 09:38 | MC Membuka Acara</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Officially open the reunion event with video
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Selamat datang di Reuni Akbar SMAN 81 Angkatan 2000!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Hari ini adalah hari yang istimewa, di mana kita berkumpul kembali setelah sekian tahun berpisah."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita mulai dengan menyaksikan video pembukaan yang telah disiapkan khusus untuk momen bersejarah ini."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Silakan menyaksikan video pembukaan kita!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Signal to operator to start opening video</li>
+                        <li><strong>Both:</strong> Step aside during video playback</li>
+                        <li><strong>MC2:</strong> Monitor audience reaction</li>
+                        <li><strong>Both:</strong> Prepare for next segment</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Coordinate with AV operator for smooth video transition
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #3</div>
+                <div class="slide-subtitle">📍 09:38 - 09:41 | Menyanyikan Lagu Indonesia Raya</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Lead national anthem singing
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita awali acara ini dengan menyanyikan lagu kebangsaan kita, Indonesia Raya."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Mohon seluruh hadirin untuk berdiri dan menyanyikannya dengan penuh khidmat."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Silakan berdiri... Mari kita nyanyikan Indonesia Raya!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>Both:</strong> Stand at attention, hand over heart</li>
+                        <li><strong>MC1:</strong> Signal to audience to stand</li>
+                        <li><strong>MC2:</strong> Signal operator to start instrumental music</li>
+                        <li><strong>Both:</strong> Lead by example with proper posture</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Ensure instrumental track is ready on YouTube
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #4</div>
+                <div class="slide-subtitle">📍 09:41 - 09:45 | Menyanyikan Mars 81</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Lead school anthem singing
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Sekarang mari kita nyanyikan bersama Mars SMAN 81!"
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Lagu yang selalu mengingatkan kita pada masa-masa indah di sekolah tercinta ini."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Ayo kita nyanyikan dengan bangga! Mars SMAN 81!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>Both:</strong> Keep audience standing</li>
+                        <li><strong>Both:</strong> Show enthusiasm and school pride</li>
+                        <li><strong>MC1:</strong> Encourage participation with hand gestures</li>
+                        <li><strong>MC2:</strong> Maintain eye contact with audience</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Mars 81 instrumental ready on YouTube
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #5</div>
+                <div class="slide-subtitle">📍 09:45 - 09:50 | Sambutan Ketua Panitia</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Introduce the organizing committee chairman
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Terima kasih. Silakan duduk kembali."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Acara reuni ini tentu tidak akan terlaksana tanpa kerja keras panitia penyelenggara."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita sambut sambutan dari Ketua Panitia Reuni Angkatan 2000."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Silakan, [Nama Ketua Panitia]!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Allow audience to sit</li>
+                        <li><strong>Both:</strong> Applaud to encourage audience participation</li>
+                        <li><strong>MC2:</strong> Hand microphone to chairman</li>
+                        <li><strong>MC1:</strong> Step aside but remain alert</li>
+                        <li><strong>MC2:</strong> Prepare to receive microphone back</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Continue with more slides... I'll add a few more key ones -->
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #6</div>
+                <div class="slide-subtitle">📍 09:50 - 10:00 | Sambutan Kepala Sekolah & Penyerahan Donasi</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Introduce school representative and facilitate donation ceremony
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Terima kasih kepada Ketua Panitia."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Sekarang, mari kita sambut sambutan dari perwakilan sekolah, [Bapak/Ibu Kepala Sekolah/Wakil Kepala Sekolah]."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Pada kesempatan ini juga akan dilakukan penyerahan donasi dari angkatan 2000 untuk sekolah tercinta kita."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Silakan, [Nama Kepala Sekolah]."
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Facilitate smooth handover of microphone</li>
+                        <li><strong>MC2:</strong> Coordinate with donation committee if needed</li>
+                        <li><strong>Both:</strong> Document the donation moment</li>
+                        <li><strong>Both:</strong> Applaud donation ceremony</li>
+                    </ul>
+                </div>
+                
+                <div class="special-note">
+                    <div class="special-title">📋 SPECIAL NOTE:</div>
+                    Coordinate with donation team for ceremonial handover
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7 - Berdoa segment -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #8</div>
+                <div class="slide-subtitle">📍 10:05 - 10:15 | Berdoa untuk Para Guru yang Telah Mendahului</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Lead memorial prayer with multimedia presentation
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE (Reski & Aldo):</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1 (Reski):</div>
+                        "Pada momen yang khusus ini, mari kita mengenang para guru dan teman-teman yang telah mendahului kita ke haribaan Yang Maha Kuasa."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2 (Aldo):</div>
+                        "Mari kita pimpin doa bersama sambil menyaksikan kolase foto kenangan mereka."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1 (Reski):</div>
+                        "Mari kita berdoa dalam hening... dengan iringan musik yang lembut."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2 (Aldo):</div>
+                        "[Setelah doa] Semoga mereka mendapat tempat terbaik di sisi-Nya."
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>Both:</strong> Lower voice tone, speak solemnly</li>
+                        <li><strong>Reski:</strong> Signal for photo montage and soft music</li>
+                        <li><strong>Aldo:</strong> Lead moment of silence</li>
+                        <li><strong>Both:</strong> Show appropriate reverence</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Coordinate photo collage and soft instrumental music
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8 - Games segment -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #10</div>
+                <div class="slide-subtitle">📍 10:30 - 10:45 | KUIS Berbagi Momen Jadul</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Host interactive quiz about school memories
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Sekarang waktunya nostalgia! Mari kita mainkan kuis 'Berbagi Momen Jadul' bersama para guru dan teman-teman."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Kami akan menampilkan cuplikan dari video journey 3 tahun, dan Bapak Ibu Guru serta teman-teman bisa bercerita tentang momen tersebut."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita mulai! Yang pertama... Bapak/Ibu [nama guru], ceritakan momen ini!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Wah, seru sekali! Ada yang ingat momen ini juga?"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Energize the audience</li>
+                        <li><strong>MC2:</strong> Facilitate interaction between teachers and alumni</li>
+                        <li><strong>Both:</strong> Encourage storytelling</li>
+                        <li><strong>Both:</strong> Keep the mood light and fun</li>
+                        <li><strong>MC1:</strong> Manage time effectively</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Video journey 3 tahun ready for playback
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9 - Cerdas Cermat -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #19</div>
+                <div class="slide-subtitle">📍 13:45 - 14:15 | Cerdas Cermat</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Host trivia game show
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Mari kita uji ingatan kita tentang masa SMA! Saatnya CERDAS CERMAT khusus Angkatan 2000!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Kami akan bagi menjadi beberapa tim berdasarkan kelas. Pertanyaannya seputar SMAN 81, masa sekolah kita, dan kenangan bersama."
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Tim yang menang akan dapat hadiah spesial! Siap?"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Pertanyaan pertama untuk semua tim... Siapa nama kepala sekolah SMAN 81 tahun 1999?"
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Tim mana yang mau menjawab? Ayo angkat tangan!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Form teams fairly</li>
+                        <li><strong>MC2:</strong> Ask engaging trivia questions about school life</li>
+                        <li><strong>Both:</strong> Keep score visibly</li>
+                        <li><strong>Both:</strong> Maintain competitive but fun atmosphere</li>
+                        <li><strong>MC1:</strong> Distribute prizes to winners</li>
+                        <li><strong>MC2:</strong> Include audience participation</li>
+                    </ul>
+                </div>
+                
+                <div class="special-note">
+                    <div class="special-title">📋 SPECIAL NOTE:</div>
+                    Prepare school-related trivia questions and prizes
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Slide - Closing -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">CUE CARD #21</div>
+                <div class="slide-subtitle">📍 14:30 - 14:40 | Foto Bersama Final di Podium</div>
+            </div>
+            <div class="slide-content">
+                <div class="objective">
+                    🎯 OBJECTIVE: Organize final group photo at podium
+                </div>
+                
+                <div class="mc-dialogue">
+                    <h3 style="margin-bottom: 15px; color: #1e3c72;">📢 DUAL MC DIALOGUE:</h3>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "Sebagai penutup resmi acara reuni kita, mari kita abadikan momen terakhir ini dengan foto bersama seluruh alumni di podium."
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Ayo kita naik ke podium bersama-sama! Ini foto terakhir kita sebagai Angkatan 2000 reunian!"
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">MC 1:</div>
+                        "[organizing positioning] Yang tinggi di belakang, yang pendek di depan... Rapat-rapat ya!"
+                    </div>
+                    
+                    <div class="mc2-speech">
+                        <div class="mc-label">MC 2:</div>
+                        "Fotografer siap? Ayo tersenyum! Satu... dua... tiga!"
+                    </div>
+                    
+                    <div class="mc1-speech">
+                        <div class="mc-label">BOTH MCs:</div>
+                        "ANGKATAN 2000 FOREVER!"
+                    </div>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎬 DUAL MC ACTIONS:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Organize final group positioning at podium</li>
+                        <li><strong>MC2:</strong> Ensure all alumni are included</li>
+                        <li><strong>Both:</strong> Create final memorable moment</li>
+                        <li><strong>Both:</strong> Lead group cheer "Angkatan 2000 Forever!"</li>
+                        <li><strong>MC1:</strong> Coordinate with photographer for multiple shots</li>
+                        <li><strong>Both:</strong> End on high, emotional note</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ TECHNICAL NOTE:</div>
+                    Final coordination with photographer for group shot
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Slide -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="slide-title">📝 DUAL MC GENERAL NOTES</div>
+                <div class="slide-subtitle">Success Tips for Professional Event Hosting</div>
+            </div>
+            <div class="slide-content">
+                <div class="action-section">
+                    <div class="action-title">🎤 Voice & Delivery Coordination:</div>
+                    <ul class="action-list">
+                        <li><strong>MC1:</strong> Lead emotional/serious segments</li>
+                        <li><strong>MC2:</strong> Lead energetic/fun segments</li>
+                        <li><strong>Both:</strong> Maintain clear, enthusiastic tone</li>
+                        <li><strong>Both:</strong> Use pauses effectively for emphasis</li>
+                        <li><strong>Both:</strong> Show genuine emotion during sentimental moments</li>
+                    </ul>
+                </div>
+                
+                <div class="action-section">
+                    <div class="action-title">🎭 Stage Presence & Teamwork:</div>
+                    <ul class="action-list">
+                        <li><strong>Both:</strong> Make eye contact with different sections</li>
+                        <li><strong>MC1:</strong> Focus on left side of audience</li>
+                        <li><strong>MC2:</strong> Focus on right side of audience</li>
+                        <li><strong>Both:</strong> Use complementary hand gestures</li>
+                        <li><strong>Both:</strong> Support each other's segments</li>
+                    </ul>
+                </div>
+                
+                <div class="technical-note">
+                    <div class="technical-title">⚠️ CRITICAL SUCCESS FACTORS:</div>
+                    <strong>Communication:</strong> Practice smooth transitions between MCs<br>
+                    <strong>Backup:</strong> Each MC should know the other's lines<br>
+                    <strong>Timing:</strong> Coordinate timing signals between MCs<br>
+                    <strong>Energy:</strong> Feed off each other's energy to maintain audience engagement
+                </div>
+                
+                <div class="special-note">
+                    <div class="special-title">🎯 REMEMBER:</div>
+                    Your role as a dual MC team is to create memories, facilitate connections, and ensure everyone feels included in this special reunion celebration! Work as a seamless team to make this event unforgettable.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">12</span>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">⬅ Previous</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Next ➡</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+        
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[n].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = n + 1;
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = n === 0;
+            document.getElementById('next-btn').disabled = n === totalSlides - 1;
+        }
+        
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            if (currentSlide < 0) currentSlide = 0;
+            showSlide(currentSlide);
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+            if (e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            }
+        });
+        
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
