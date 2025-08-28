@@ -5,492 +5,722 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rundown Reuni 81 Angkatan 2000</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f5f5f5;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
         }
         
         .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .school-logo {
+            width: 60px;
+            height: 60px;
+            background: #ffd700;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
         
         h1 {
-            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+        }
+        
+        .event-info {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            padding: 20px;
             text-align: center;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
+            color: #1e3c72;
+            font-weight: 600;
+        }
+        
+        .event-time {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        
+        .event-duration {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+        
+        .table-container {
+            padding: 30px;
+            overflow-x: auto;
         }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
-            font-size: 13px;
+            font-size: 14px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
         th {
-            background-color: #3498db;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
-            padding: 12px 6px;
+            padding: 16px 12px;
             text-align: left;
-            font-weight: bold;
-            border: 1px solid #2980b9;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 3px solid #ffd700;
         }
         
         td {
-            padding: 8px 6px;
-            border: 1px solid #bdc3c7;
+            padding: 12px;
+            border-bottom: 1px solid #f0f4f8;
             vertical-align: top;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f8f9fa;
+            transition: all 0.2s ease;
         }
         
         tr:hover {
-            background-color: #e3f2fd;
-        }
-        
-        .agenda-cell {
-            background-color: #ecf0f1;
-            font-weight: bold;
-            color: #2c3e50;
-            min-width: 100px;
-        }
-        
-        .time-cell {
-            font-weight: bold;
-            color: #27ae60;
-            white-space: nowrap;
-            text-align: center;
-            min-width: 50px;
-        }
-        
-        .description-cell {
-            max-width: 350px;
-            word-wrap: break-word;
-            line-height: 1.4;
-        }
-        
-        .equipment-cell {
-            max-width: 200px;
-            word-wrap: break-word;
-            color: #8e44ad;
-            font-size: 12px;
-        }
-        
-        .person-cell {
-            max-width: 180px;
-            word-wrap: break-word;
-            color: #e67e22;
-            font-size: 12px;
-        }
-        
-        /* Color coding for different agendas */
-        .agenda-persiapan { background-color: #fff3cd; }
-        .agenda-cek-kesehatan { background-color: #d1ecf1; }
-        .agenda-pembukaan { background-color: #d4edda; }
-        .agenda-sambutan { background-color: #f8d7da; }
-        .agenda-berdoa { background-color: #e2e3e5; }
-        .agenda-jauh { background-color: #ffeaa7; }
-        .agenda-nostalgia { background-color: #fdcb6e; }
-        .agenda-penampilan { background-color: #fab1a0; }
-        .agenda-untukmu { background-color: #fd79a8; }
-        .agenda-ishoma { background-color: #74b9ff; }
-        .agenda-pengumuman { background-color: #a29bfe; }
-        .agenda-penutupan { background-color: #6c5ce7; color: white; }
-        
-        @media (max-width: 768px) {
-            table {
-                font-size: 11px;
-            }
-            
-            th, td {
-                padding: 4px 3px;
-            }
-            
-            .container {
-                margin: 10px;
-                padding: 15px;
-            }
-            
-            .description-cell {
-                max-width: 200px;
-            }
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
         .row-number {
-            font-weight: bold;
-            color: #7f8c8d;
+            font-weight: 700;
+            color: #64748b;
             text-align: center;
-            width: 30px;
-        }
-
-        .time-slot {
+            width: 40px;
             font-size: 12px;
-            color: #666;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+        
+        .agenda-cell {
+            font-weight: 600;
+            color: white;
             text-align: center;
-            padding: 4px;
+            border-radius: 8px;
+            padding: 8px 6px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-width: 110px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        
+        .time-cell {
+            font-weight: 700;
+            color: #1e3c72;
+            text-align: center;
+            background: #f0f9ff;
+            border-radius: 6px;
+            padding: 6px;
+            font-size: 13px;
+            border: 2px solid #e0f2fe;
+            min-width: 55px;
+        }
+        
+        .description-cell {
+            line-height: 1.5;
+            color: #334155;
+            max-width: 350px;
+            word-wrap: break-word;
+        }
+        
+        .equipment-cell {
+            color: #7c3aed;
+            font-size: 12px;
+            line-height: 1.4;
+            max-width: 200px;
+            word-wrap: break-word;
+            background: #faf5ff;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        .person-cell {
+            color: #dc2626;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.4;
+            max-width: 180px;
+            word-wrap: break-word;
+            background: #fef2f2;
+            padding: 8px;
+            border-radius: 6px;
+        }
+        
+        /* Themed agenda colors */
+        .agenda-persiapan { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .agenda-cek-kesehatan { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .agenda-pembukaan { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .agenda-sambutan { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+        .agenda-berdoa { background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%); }
+        .agenda-jauh { background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); }
+        .agenda-nostalgia { background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); }
+        .agenda-penampilan { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); }
+        .agenda-untukmu { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .agenda-ishoma { background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); }
+        .agenda-pengumuman { background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%); }
+        .agenda-penutupan { background: linear-gradient(135deg, #1f2937 0%, #111827 100%); }
+        
+        .footer {
+            background: #f8fafc;
+            padding: 25px 30px;
+            border-top: 3px solid #ffd700;
+        }
+        
+        .footer h3 {
+            color: #1e3c72;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ffd700;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .info-card h4 {
+            color: #1e3c72;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .info-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 1024px) {
+            table { font-size: 12px; }
+            th, td { padding: 8px 6px; }
+            .container { margin: 10px; }
+            h1 { font-size: 1.8rem; }
+        }
+        
+        @media (max-width: 768px) {
+            .header { padding: 20px; }
+            .table-container { padding: 15px; }
+            table { font-size: 11px; }
+            th, td { padding: 6px 4px; }
+            .description-cell { max-width: 200px; }
+            .info-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>📅 Rundown Reuni 81 Angkatan 2000 - For MC</h1>
-        <div class="time-slot">⏰ Acara berlangsung: 07:30 - 16:00 WIB (8.5 jam)</div>
+        <div class="header">
+            <div class="header-content">
+                <div class="school-logo">81</div>
+                <h1>Rundown Reuni Angkatan 2000</h1>
+                <div class="subtitle">SMAN 81 Jakarta - Master of Ceremony Guide</div>
+            </div>
+        </div>
         
-        <table>
-            <thead>
-                <tr>
-                    <th style="width: 3%;">#</th>
-                    <th style="width: 12%;">Agenda</th>
-                    <th style="width: 7%;">Mulai</th>
-                    <th style="width: 7%;">Selesai</th>
-                    <th style="width: 7%;">Durasi</th>
-                    <th style="width: 35%;">Rincian Kegiatan</th>
-                    <th style="width: 20%;">Dukungan Peralatan/Perlengkapan</th>
-                    <th style="width: 9%;">Penanggung Jawab & Tim Pendukung</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="agenda-persiapan">
-                    <td class="row-number">1</td>
-                    <td class="agenda-cell">Persiapan</td>
-                    <td class="time-cell">07:30</td>
-                    <td class="time-cell">08:30</td>
-                    <td class="time-cell">1:00</td>
-                    <td class="description-cell">Cek panggung, tenda, gubukan, dll, Briefing, Berdoa</td>
-                    <td class="equipment-cell">Formulir ceklis</td>
-                    <td class="person-cell">Semua Panitia</td>
-                </tr>
-                <tr class="agenda-persiapan">
-                    <td class="row-number">2</td>
-                    <td class="agenda-cell">Persiapan</td>
-                    <td class="time-cell">08:30</td>
-                    <td class="time-cell">09:15</td>
-                    <td class="time-cell">0:45</td>
-                    <td class="description-cell">Registrasi & School Tour</td>
-                    <td class="equipment-cell">Daftar hadir</td>
-                    <td class="person-cell">Penerima tamu, OSIS</td>
-                </tr>
-                <tr class="agenda-cek-kesehatan">
-                    <td class="row-number">3</td>
-                    <td class="agenda-cell">Cek Kesehatan</td>
-                    <td class="time-cell">07:30</td>
-                    <td class="time-cell">09:15</td>
-                    <td class="time-cell">1:45</td>
-                    <td class="description-cell">Cek Kesehatan (Prioritas untuk para Guru & Karyawan)</td>
-                    <td class="equipment-cell">Alkes</td>
-                    <td class="person-cell">Tenaga Medis</td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">4</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:15</td>
-                    <td class="time-cell">09:30</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">Persiapan berkumpul ke lokasi acara</td>
-                    <td class="equipment-cell">Woro-woro via pengeras suara (TVC diputar)</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator</td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">5</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:30</td>
-                    <td class="time-cell">09:31</td>
-                    <td class="time-cell">0:01</td>
-                    <td class="description-cell">Bel sekolah berbunyi</td>
-                    <td class="equipment-cell">Suara bel sekolah</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">6</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:31</td>
-                    <td class="time-cell">09:33</td>
-                    <td class="time-cell">0:02</td>
-                    <td class="description-cell">MC memanggil seluruh partisipan</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">7</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:33</td>
-                    <td class="time-cell">09:38</td>
-                    <td class="time-cell">0:05</td>
-                    <td class="description-cell">MC membuka acara</td>
-                    <td class="equipment-cell">diawali dengan Video Pembukaan</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">8</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:38</td>
-                    <td class="time-cell">09:41</td>
-                    <td class="time-cell">0:03</td>
-                    <td class="description-cell">Menyanyikan lagu Indonesia Raya</td>
-                    <td class="equipment-cell">Instrumen lagu Indonesia Raya (Youtube)</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-pembukaan">
-                    <td class="row-number">9</td>
-                    <td class="agenda-cell">Pembukaan</td>
-                    <td class="time-cell">09:41</td>
-                    <td class="time-cell">09:45</td>
-                    <td class="time-cell">0:04</td>
-                    <td class="description-cell">Menyanyikan Mars 81</td>
-                    <td class="equipment-cell">Instrumen lagu Mars 81 (Youtube)</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-sambutan">
-                    <td class="row-number">10</td>
-                    <td class="agenda-cell">Sambutan</td>
-                    <td class="time-cell">09:45</td>
-                    <td class="time-cell">09:50</td>
-                    <td class="time-cell">0:05</td>
-                    <td class="description-cell">Sambutan Ketua Panitia</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell">Seksi Acara/MC Humas Guru, Stage Manager, Operator, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-sambutan">
-                    <td class="row-number">11</td>
-                    <td class="agenda-cell">Sambutan</td>
-                    <td class="time-cell">09:50</td>
-                    <td class="time-cell">10:00</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Sambutan Perwakilan Sekolah (KaSek/WaKaSek) dilanjutkan dengan penyerahan donasi ke Sekolah</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-sambutan">
-                    <td class="row-number">12</td>
-                    <td class="agenda-cell">Sambutan</td>
-                    <td class="time-cell">10:00</td>
-                    <td class="time-cell">10:05</td>
-                    <td class="time-cell">0:05</td>
-                    <td class="description-cell">Sambutan Perwakilan Guru</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-berdoa">
-                    <td class="row-number">13</td>
-                    <td class="agenda-cell">Berdoa</td>
-                    <td class="time-cell">10:05</td>
-                    <td class="time-cell">10:15</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Berdoa untuk para Guru yang telah mendahului kita</td>
-                    <td class="equipment-cell">dipimpin oleh MC (Reski & Aldo) dg menampilkan kolase foto dan instrumen msik lembut</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator</td>
-                </tr>
-                <tr class="agenda-berdoa">
-                    <td class="row-number">14</td>
-                    <td class="agenda-cell">Berdoa</td>
-                    <td class="time-cell">-</td>
-                    <td class="time-cell">-</td>
-                    <td class="time-cell">-</td>
-                    <td class="description-cell">Video kilas balik 3 tahun (2 menit)</td>
-                    <td class="equipment-cell">video journey 3 tahun</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-berdoa">
-                    <td class="row-number">15</td>
-                    <td class="agenda-cell">Berdoa</td>
-                    <td class="time-cell">-</td>
-                    <td class="time-cell">-</td>
-                    <td class="time-cell">-</td>
-                    <td class="description-cell">Berdoa untuk para Sahabat yang telah mendahului kita</td>
-                    <td class="equipment-cell">Video kompilasi kenangan</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-jauh">
-                    <td class="row-number">16</td>
-                    <td class="agenda-cell">Jauh di Mata Dekat di Hati</td>
-                    <td class="time-cell">10:15</td>
-                    <td class="time-cell">10:30</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">Salam hangat dari Sahabat</td>
-                    <td class="equipment-cell">Video kompilasi sahabat di luar negeri</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator</td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">17</td>
-                    <td class="agenda-cell">Nostalgia Bapak/Ibu Guru & Sahabat</td>
-                    <td class="time-cell">10:30</td>
-                    <td class="time-cell">10:45</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">[KUIS] Berbagi momen jadul bersama Bapak/Ibu Guru/Sahabat (kenangan 3 tahun angkatan 2000)</td>
-                    <td class="equipment-cell">Bapak/Ibu Guru & sahabat menceritakan salah satu momen pada video journey</td>
-                    <td class="person-cell">Seksi Acara/MC Stage Manager, Operator, Seksi Dana Usaha</td>
-                </tr>
-                <tr class="agenda-penampilan">
-                    <td class="row-number">18</td>
-                    <td class="agenda-cell">Penampilan Guru</td>
-                    <td class="time-cell">10:45</td>
-                    <td class="time-cell">11:00</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">Singing Performance (Guru)</td>
-                    <td class="equipment-cell">diiringi oleh Hara Band</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Guru-guru</td>
-                </tr>
-                <tr class="agenda-pengumuman">
-                    <td class="row-number">19</td>
-                    <td class="agenda-cell">Pengumuman Doorprize (Khusus Guru)</td>
-                    <td class="time-cell">11:00</td>
-                    <td class="time-cell">11:10</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Pengumuman dan penyerahan doorprize (akan menyesuaikan wktnya)</td>
-                    <td class="equipment-cell">hadiah doorprize</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Seksi Dana Usaha, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-penampilan">
-                    <td class="row-number">20</td>
-                    <td class="agenda-cell">Penampilan Alumni</td>
-                    <td class="time-cell">11:10</td>
-                    <td class="time-cell">11:25</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">- Singing Performance (Alumni)<br>- SUC (Reski, Wiwit, Hanita)</td>
-                    <td class="equipment-cell">diiringi oleh Hara Band</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Band Pengiring/Alumni</td>
-                </tr>
-                <tr class="agenda-untukmu">
-                    <td class="row-number">21</td>
-                    <td class="agenda-cell">Untukmu Guruku</td>
-                    <td class="time-cell">11:25</td>
-                    <td class="time-cell">11:50</td>
-                    <td class="time-cell">0:25</td>
-                    <td class="description-cell">(Diawali potong tumpeng) Penyerahan tanda kasih untuk para Guru dan Karyawan</td>
-                    <td class="equipment-cell">Tanda kasih dll</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Seksi Dana Usaha, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-untukmu">
-                    <td class="row-number">22</td>
-                    <td class="agenda-cell">Untukmu Guruku</td>
-                    <td class="time-cell">11:50</td>
-                    <td class="time-cell">12:00</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Foto bersama (seluruh Guru, Karyawan dan Alumni)</td>
-                    <td class="equipment-cell">ditambah foto bersama khusus alumni di stage</td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-ishoma">
-                    <td class="row-number">23</td>
-                    <td class="agenda-cell">Ishoma dan Ramah Tamah</td>
-                    <td class="time-cell">12:00</td>
-                    <td class="time-cell">12:45</td>
-                    <td class="time-cell">0:45</td>
-                    <td class="description-cell">Ishoma, keliling bazaar UMKM, temu kangen</td>
-                    <td class="equipment-cell">Pemutaran TVC</td>
-                    <td class="person-cell">Seksi Konsumsi, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-pengumuman">
-                    <td class="row-number">24</td>
-                    <td class="agenda-cell">Pengumuman Doorprize (Khusus Alumni)</td>
-                    <td class="time-cell">12:45</td>
-                    <td class="time-cell">12:55</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Pengumuman dan penyerahan doorprize</td>
-                    <td class="equipment-cell">hadiah doorprize (misalnya: 5 buah)</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Seksi Dana Usaha, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">25</td>
-                    <td class="agenda-cell">Nostalgia (bagian 1)</td>
-                    <td class="time-cell">12:55</td>
-                    <td class="time-cell">13:05</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Menyanyikan lagu Anak Sekolah</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Band Pengiring/Band Alumni</td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">26</td>
-                    <td class="agenda-cell">Nostalgia (bagian 1)</td>
-                    <td class="time-cell">13:05</td>
-                    <td class="time-cell">13:10</td>
-                    <td class="time-cell">0:05</td>
-                    <td class="description-cell">Menyanyikan lagu SKA (Tipe-x/Junfangungfoo)</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">27</td>
-                    <td class="agenda-cell">Nostalgia (bagian 1)</td>
-                    <td class="time-cell">13:10</td>
-                    <td class="time-cell">13:15</td>
-                    <td class="time-cell">0:05</td>
-                    <td class="description-cell">Menyanyikan lagu Britpop/Pop (Oasis/Hanson)</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell"></td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">28</td>
-                    <td class="agenda-cell">Nostalgia (bagian 2)</td>
-                    <td class="time-cell">13:15</td>
-                    <td class="time-cell">13:45</td>
-                    <td class="time-cell">0:30</td>
-                    <td class="description-cell">Seating arrangement berdasarkan kelas (dipanggil oleh MC)</td>
-                    <td class="equipment-cell">Fotografer mengambil foto masing-masing alumni</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Band Pengiring/Alumni</td>
-                </tr>
-                <tr class="agenda-nostalgia">
-                    <td class="row-number">29</td>
-                    <td class="agenda-cell">Nostalgia (bagian 2)</td>
-                    <td class="time-cell">13:45</td>
-                    <td class="time-cell">14:15</td>
-                    <td class="time-cell">0:30</td>
-                    <td class="description-cell">Cerdas Cermat</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Band Pengiring/Alumni</td>
-                </tr>
-                <tr class="agenda-penutupan">
-                    <td class="row-number">30</td>
-                    <td class="agenda-cell">Penutupan</td>
-                    <td class="time-cell">14:15</td>
-                    <td class="time-cell">14:30</td>
-                    <td class="time-cell">0:15</td>
-                    <td class="description-cell">Penutupan & Rencana Kedepannya (termasuk promo UMKM alumni)</td>
-                    <td class="equipment-cell">Presentasi Rencana Jangka Panjang & Video UMKM</td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-penutupan">
-                    <td class="row-number">31</td>
-                    <td class="agenda-cell">Penutupan</td>
-                    <td class="time-cell">14:30</td>
-                    <td class="time-cell">14:40</td>
-                    <td class="time-cell">0:10</td>
-                    <td class="description-cell">Foto bersama (seluruh Alumni) di Podium</td>
-                    <td class="equipment-cell"></td>
-                    <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator, Fotografer/Videografer</td>
-                </tr>
-                <tr class="agenda-penutupan">
-                    <td class="row-number">32</td>
-                    <td class="agenda-cell">Penutupan</td>
-                    <td class="time-cell">14:40</td>
-                    <td class="time-cell">16:00</td>
-                    <td class="time-cell">1:20</td>
-                    <td class="description-cell">Waktu Bebas & Jejaring</td>
-                    <td class="equipment-cell">Peralatan Band vendor bisa dimainkan</td>
-                    <td class="person-cell"></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="event-info">
+            <div class="event-time">🕐 07:30 - 16:00 WIB</div>
+            <div class="event-duration">Total Durasi: 8 jam 30 menit</div>
+        </div>
         
-        <div style="margin-top: 20px; padding: 15px; background-color: #e8f4fd; border-radius: 5px;">
-            <h3 style="margin-top: 0; color: #2c3e50;">📝 Informasi Acara:</h3>
-            <ul style="color: #2c3e50; margin-bottom: 0;">
-                <li><strong>Event:</strong> Reuni Angkatan 2000 SMAN 81 Jakarta</li>
-                <li><strong>Waktu:</strong> 07:30 - 16:00 WIB (8 jam 30 menit)</li>
-                <li><strong>Persiapan:</strong> 07:30 - 09:15 (Termasuk registrasi & cek kesehatan)</li>
-                <li><strong>Acara Utama:</strong> 09:15 - 14:40 (Pembukaan, sambutan, hiburan, nostalgia)</li>
-                <li><strong>Networking:</strong> 12:00 - 12:45 (Ishoma & bazaar UMKM)</li>
-                <li><strong>Penutup:</strong> 14:40 - 16:00 (Waktu bebas & jejaring)</li>
-                <li><strong>Catatan:</strong> Timing dapat disesuaikan berdasarkan kondisi lapangan</li>
-            </ul>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 3%;">#</th>
+                        <th style="width: 12%;">Agenda</th>
+                        <th style="width: 7%;">Mulai</th>
+                        <th style="width: 7%;">Selesai</th>
+                        <th style="width: 7%;">Durasi</th>
+                        <th style="width: 35%;">Rincian Kegiatan</th>
+                        <th style="width: 20%;">Dukungan Peralatan</th>
+                        <th style="width: 9%;">Penanggung Jawab</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="row-number">1</td>
+                        <td class="agenda-cell agenda-persiapan">Persiapan</td>
+                        <td class="time-cell">07:30</td>
+                        <td class="time-cell">08:30</td>
+                        <td class="time-cell">1:00</td>
+                        <td class="description-cell">Cek panggung, tenda, gubukan, dll, Briefing, Berdoa</td>
+                        <td class="equipment-cell">Formulir ceklis</td>
+                        <td class="person-cell">Semua Panitia</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">2</td>
+                        <td class="agenda-cell agenda-persiapan">Persiapan</td>
+                        <td class="time-cell">08:30</td>
+                        <td class="time-cell">09:15</td>
+                        <td class="time-cell">0:45</td>
+                        <td class="description-cell">Registrasi & School Tour</td>
+                        <td class="equipment-cell">Daftar hadir</td>
+                        <td class="person-cell">Penerima tamu, OSIS</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">3</td>
+                        <td class="agenda-cell agenda-cek-kesehatan">Cek Kesehatan</td>
+                        <td class="time-cell">07:30</td>
+                        <td class="time-cell">09:15</td>
+                        <td class="time-cell">1:45</td>
+                        <td class="description-cell">Cek Kesehatan (Prioritas untuk para Guru & Karyawan)</td>
+                        <td class="equipment-cell">Alat kesehatan</td>
+                        <td class="person-cell">Tenaga Medis</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">4</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:15</td>
+                        <td class="time-cell">09:30</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">Persiapan berkumpul ke lokasi acara</td>
+                        <td class="equipment-cell">Woro-woro via pengeras suara (TVC diputar)</td>
+                        <td class="person-cell">Seksi Acara/MC, Stage Manager, Operator</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">5</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:30</td>
+                        <td class="time-cell">09:31</td>
+                        <td class="time-cell">0:01</td>
+                        <td class="description-cell">Bel sekolah berbunyi</td>
+                        <td class="equipment-cell">Suara bel sekolah</td>
+                        <td class="person-cell">-</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">6</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:31</td>
+                        <td class="time-cell">09:33</td>
+                        <td class="time-cell">0:02</td>
+                        <td class="description-cell">MC memanggil seluruh partisipan</td>
+                        <td class="equipment-cell">Microphone</td>
+                        <td class="person-cell">MC</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">7</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:33</td>
+                        <td class="time-cell">09:38</td>
+                        <td class="time-cell">0:05</td>
+                        <td class="description-cell">MC membuka acara</td>
+                        <td class="equipment-cell">Video Pembukaan</td>
+                        <td class="person-cell">MC, Operator</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">8</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:38</td>
+                        <td class="time-cell">09:41</td>
+                        <td class="time-cell">0:03</td>
+                        <td class="description-cell">Menyanyikan lagu Indonesia Raya</td>
+                        <td class="equipment-cell">Instrumen lagu Indonesia Raya (Youtube)</td>
+                        <td class="person-cell">Semua peserta</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">9</td>
+                        <td class="agenda-cell agenda-pembukaan">Pembukaan</td>
+                        <td class="time-cell">09:41</td>
+                        <td class="time-cell">09:45</td>
+                        <td class="time-cell">0:04</td>
+                        <td class="description-cell">Menyanyikan Mars 81</td>
+                        <td class="equipment-cell">Instrumen lagu Mars 81 (Youtube)</td>
+                        <td class="person-cell">Semua peserta</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">10</td>
+                        <td class="agenda-cell agenda-sambutan">Sambutan</td>
+                        <td class="time-cell">09:45</td>
+                        <td class="time-cell">09:50</td>
+                        <td class="time-cell">0:05</td>
+                        <td class="description-cell">Sambutan Ketua Panitia</td>
+                        <td class="equipment-cell">Microphone, podium</td>
+                        <td class="person-cell">Ketua Panitia</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">11</td>
+                        <td class="agenda-cell agenda-sambutan">Sambutan</td>
+                        <td class="time-cell">09:50</td>
+                        <td class="time-cell">10:00</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Sambutan Perwakilan Sekolah (KaSek/WaKaSek) dilanjutkan dengan penyerahan donasi ke Sekolah</td>
+                        <td class="equipment-cell">Microphone, podium</td>
+                        <td class="person-cell">Kepala Sekolah</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">12</td>
+                        <td class="agenda-cell agenda-sambutan">Sambutan</td>
+                        <td class="time-cell">10:00</td>
+                        <td class="time-cell">10:05</td>
+                        <td class="time-cell">0:05</td>
+                        <td class="description-cell">Sambutan Perwakilan Guru</td>
+                        <td class="equipment-cell">Microphone</td>
+                        <td class="person-cell">Perwakilan Guru</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">13</td>
+                        <td class="agenda-cell agenda-berdoa">Berdoa</td>
+                        <td class="time-cell">10:05</td>
+                        <td class="time-cell">10:15</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Berdoa untuk para Guru yang telah mendahului kita</td>
+                        <td class="equipment-cell">Kolase foto, musik lembut</td>
+                        <td class="person-cell">MC (Reski & Aldo)</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">14</td>
+                        <td class="agenda-cell agenda-berdoa">Berdoa</td>
+                        <td class="time-cell">-</td>
+                        <td class="time-cell">-</td>
+                        <td class="time-cell">-</td>
+                        <td class="description-cell">Video kilas balik 3 tahun (2 menit)</td>
+                        <td class="equipment-cell">Video journey 3 tahun</td>
+                        <td class="person-cell">Tim Multimedia</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">15</td>
+                        <td class="agenda-cell agenda-berdoa">Berdoa</td>
+                        <td class="time-cell">-</td>
+                        <td class="time-cell">-</td>
+                        <td class="time-cell">-</td>
+                        <td class="description-cell">Berdoa untuk para Sahabat yang telah mendahului kita</td>
+                        <td class="equipment-cell">Video kompilasi kenangan</td>
+                        <td class="person-cell">MC</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">16</td>
+                        <td class="agenda-cell agenda-jauh">Jauh di Mata Dekat di Hati</td>
+                        <td class="time-cell">10:15</td>
+                        <td class="time-cell">10:30</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">Salam hangat dari Sahabat</td>
+                        <td class="equipment-cell">Video kompilasi sahabat di luar negeri</td>
+                        <td class="person-cell">MC, Tim Multimedia</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">17</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia Guru & Sahabat</td>
+                        <td class="time-cell">10:30</td>
+                        <td class="time-cell">10:45</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">[KUIS] Berbagi momen jadul bersama Bapak/Ibu Guru/Sahabat (kenangan 3 tahun angkatan 2000)</td>
+                        <td class="equipment-cell">Video journey, mic</td>
+                        <td class="person-cell">MC, Guru-guru</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">18</td>
+                        <td class="agenda-cell agenda-penampilan">Penampilan Guru</td>
+                        <td class="time-cell">10:45</td>
+                        <td class="time-cell">11:00</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">Singing Performance (Guru)</td>
+                        <td class="equipment-cell">Sound system, mic</td>
+                        <td class="person-cell">Guru-guru, Hara Band</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">19</td>
+                        <td class="agenda-cell agenda-pengumuman">Doorprize Guru</td>
+                        <td class="time-cell">11:00</td>
+                        <td class="time-cell">11:10</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Pengumuman dan penyerahan doorprize (akan menyesuaikan wktnya)</td>
+                        <td class="equipment-cell">Hadiah doorprize</td>
+                        <td class="person-cell">MC, Panitia Dana</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">20</td>
+                        <td class="agenda-cell agenda-penampilan">Penampilan Alumni</td>
+                        <td class="time-cell">11:10</td>
+                        <td class="time-cell">11:25</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">Singing Performance (Alumni) - SUC (Reski, Wiwit, Hanita)</td>
+                        <td class="equipment-cell">Band set lengkap</td>
+                        <td class="person-cell">Alumni performer, Hara Band</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">21</td>
+                        <td class="agenda-cell agenda-untukmu">Untukmu Guruku</td>
+                        <td class="time-cell">11:25</td>
+                        <td class="time-cell">11:50</td>
+                        <td class="time-cell">0:25</td>
+                        <td class="description-cell">(Diawali potong tumpeng) Penyerahan tanda kasih untuk para Guru dan Karyawan</td>
+                        <td class="equipment-cell">Tumpeng, tanda kasih</td>
+                        <td class="person-cell">Panitia, Fotografer</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">22</td>
+                        <td class="agenda-cell agenda-untukmu">Untukmu Guruku</td>
+                        <td class="time-cell">11:50</td>
+                        <td class="time-cell">12:00</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Foto bersama (seluruh Guru, Karyawan dan Alumni)</td>
+                        <td class="equipment-cell">Kamera profesional</td>
+                        <td class="person-cell">Fotografer</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">23</td>
+                        <td class="agenda-cell agenda-ishoma">Ishoma & Ramah Tamah</td>
+                        <td class="time-cell">12:00</td>
+                        <td class="time-cell">12:45</td>
+                        <td class="time-cell">0:45</td>
+                        <td class="description-cell">Ishoma, keliling bazaar UMKM, temu kangen</td>
+                        <td class="equipment-cell">Catering, TVC</td>
+                        <td class="person-cell">Seksi Konsumsi</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">24</td>
+                        <td class="agenda-cell agenda-pengumuman">Doorprize Alumni</td>
+                        <td class="time-cell">12:45</td>
+                        <td class="time-cell">12:55</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Pengumuman dan penyerahan doorprize</td>
+                        <td class="equipment-cell">Hadiah doorprize (5 buah)</td>
+                        <td class="person-cell">MC, Panitia Dana</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">25</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia (bagian 1)</td>
+                        <td class="time-cell">12:55</td>
+                        <td class="time-cell">13:05</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Menyanyikan lagu Anak Sekolah</td>
+                        <td class="equipment-cell">Sound system</td>
+                        <td class="person-cell">Band Alumni</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">26</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia (bagian 1)</td>
+                        <td class="time-cell">13:05</td>
+                        <td class="time-cell">13:10</td>
+                        <td class="time-cell">0:05</td>
+                        <td class="description-cell">Menyanyikan lagu SKA (Tipe-x/Junfangungfoo)</td>
+                        <td class="equipment-cell">Band set</td>
+                        <td class="person-cell">Band Alumni</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">27</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia (bagian 1)</td>
+                        <td class="time-cell">13:10</td>
+                        <td class="time-cell">13:15</td>
+                        <td class="time-cell">0:05</td>
+                        <td class="description-cell">Menyanyikan lagu Britpop/Pop (Oasis/Hanson)</td>
+                        <td class="equipment-cell">Band set</td>
+                        <td class="person-cell">Band Alumni</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">28</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia (bagian 2)</td>
+                        <td class="time-cell">13:15</td>
+                        <td class="time-cell">13:45</td>
+                        <td class="time-cell">0:30</td>
+                        <td class="description-cell">Seating arrangement berdasarkan kelas (dipanggil oleh MC)</td>
+                        <td class="equipment-cell">Kamera, kursi</td>
+                        <td class="person-cell">MC, Fotografer</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">29</td>
+                        <td class="agenda-cell agenda-nostalgia">Nostalgia (bagian 2)</td>
+                        <td class="time-cell">13:45</td>
+                        <td class="time-cell">14:15</td>
+                        <td class="time-cell">0:30</td>
+                        <td class="description-cell">Cerdas Cermat</td>
+                        <td class="equipment-cell">Soal, hadiah</td>
+                        <td class="person-cell">MC, Tim Games</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">30</td>
+                        <td class="agenda-cell agenda-penutupan">Penutupan</td>
+                        <td class="time-cell">14:15</td>
+                        <td class="time-cell">14:30</td>
+                        <td class="time-cell">0:15</td>
+                        <td class="description-cell">Penutupan & Rencana Kedepannya (termasuk promo UMKM alumni)</td>
+                        <td class="equipment-cell">Presentasi, video UMKM</td>
+                        <td class="person-cell">MC, Tim Multimedia</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">31</td>
+                        <td class="agenda-cell agenda-penutupan">Penutupan</td>
+                        <td class="time-cell">14:30</td>
+                        <td class="time-cell">14:40</td>
+                        <td class="time-cell">0:10</td>
+                        <td class="description-cell">Foto bersama (seluruh Alumni) di Podium</td>
+                        <td class="equipment-cell">Kamera profesional</td>
+                        <td class="person-cell">Fotografer</td>
+                    </tr>
+                    <tr>
+                        <td class="row-number">32</td>
+                        <td class="agenda-cell agenda-penutupan">Penutupan</td>
+                        <td class="time-cell">14:40</td>
+                        <td class="time-cell">16:00</td>
+                        <td class="time-cell">1:20</td>
+                        <td class="description-cell">Waktu Bebas & Jejaring</td>
+                        <td class="equipment-cell">Band equipment free play</td>
+                        <td class="person-cell">Panitia</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="footer">
+            <h3>📋 Informasi Acara Reuni</h3>
+            
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>🏫 Detail Event</h4>
+                    <p><strong>Sekolah:</strong> SMAN 81 Jakarta<br>
+                    <strong>Angkatan:</strong> 2000<br>
+                    <strong>Tanggal:</strong> Sesuai jadwal<br>
+                    <strong>Durasi:</strong> 8 jam 30 menit</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>⏰ Timeline Utama</h4>
+                    <p><strong>Persiapan:</strong> 07:30 - 09:15<br>
+                    <strong>Pembukaan:</strong> 09:15 - 10:15<br>
+                    <strong>Acara Inti:</strong> 10:15 - 14:15<br>
+                    <strong>Penutup:</strong> 14:15 - 16:00</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>🎯 Highlight Acara</h4>
+                    <p>• Sambutan & Donasi ke Sekolah<br>
+                    • Penampilan Guru & Alumni<br>
+                    • Sesi Nostalgia & Games<br>
+                    • Networking & UMKM Bazaar</p>
+                </div>
+                
+                <div class="info-card">
+                    <h4>📝 Catatan MC</h4>
+                    <p>• Timing dapat disesuaikan<br>
+                    • Siapkan backup plan<br>
+                    • Koordinasi dengan tim teknis<br>
+                    • Jaga mood & energy peserta</p>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);"></div>
+                    Persiapan
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);"></div>
+                    Kesehatan
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);"></div>
+                    Pembukaan
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);"></div>
+                    Sambutan
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);"></div>
+                    Penampilan
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);"></div>
+                    Nostalgia
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: linear-gradient(135deg, #1f2937 0%, #111827 100%);"></div>
+                    Penutupan
+                </div>
+            </div>
         </div>
     </div>
 </body>
