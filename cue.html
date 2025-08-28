@@ -131,39 +131,6 @@
             z-index: 1000;
         }
         
-        .intro-slide {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 50px;
-        }
-        
-        .intro-slide h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .intro-slide h2 {
-            font-size: 1.5rem;
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
-        .intro-slide .highlight {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            color: #1f2937;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-        
         /* Mobile First - Extra Small devices (phones, 600px and down) */
         @media (max-width: 600px) {
             body {
@@ -213,19 +180,6 @@
                 right: 15px;
                 padding: 8px 15px;
                 font-size: 12px;
-            }
-            
-            .intro-slide h1 {
-                font-size: 2rem;
-            }
-            
-            .intro-slide h2 {
-                font-size: 1.2rem;
-            }
-            
-            .intro-slide .highlight {
-                font-size: 1rem;
-                padding: 12px 20px;
             }
         }
 
@@ -378,18 +332,8 @@
 </head>
 <body>
     <div class="slideshow-container">
-        <!-- Intro Slide -->
-        <div class="slide active intro-slide">
-            <h1>🎤 KARTU CUE MC</h1>
-            <h2>Reuni SMAN 81 Angkatan 2000</h2>
-            <div class="highlight">
-                Dual MC • 09:31 - 14:40<br>
-                21 Segmen • 4 Jam 9 Menit
-            </div>
-        </div>
-
         <!-- CUE 1 -->
-        <div class="slide">
+        <div class="slide active">
             <div class="cue-header">
                 <div class="time-activity">09:31 - 09:33 | PANGGIL PESERTA</div>
                 <div class="objective">Kumpulkan semua peserta ke area acara utama</div>
@@ -1011,7 +955,7 @@
     </div>
     
     <div class="slide-counter">
-        <span id="current-slide">1</span> / <span id="total-slides">22</span>
+        <span id="current-slide">1</span> / <span id="total-slides">21</span>
     </div>
 
     <script>
